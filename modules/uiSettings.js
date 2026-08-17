@@ -83,7 +83,7 @@ function uiCreateCheckbox(settings, visualizer, prefix, suffix, { key, label, de
 function uiCreateResetButton(settings, visualizer, fields, prefix, suffix) {
     const wrapper = document.createElement("div");
     const button = document.createElement("button");
-    button.textContent = "Reset";
+    button.textContent = "重置";
 
     button.addEventListener("click", () => {
         settings.resetAll();
@@ -106,7 +106,7 @@ function uiCreateResetButton(settings, visualizer, fields, prefix, suffix) {
                     element.checked = field.def;
                 }
             } else {
-                console.warn(`Element not found: ${elementId}`);
+                console.warn(`未找到元素：${elementId}`);
             }
         });
 
@@ -121,7 +121,7 @@ function uiCreateResetButton(settings, visualizer, fields, prefix, suffix) {
 function uiGenerateJoystickSettings(settings, visualizer, side, containerPrefix) {
     const container = document.getElementById(`${containerPrefix}-${side}`);
     if (!container) {
-        console.warn(`Container not found: ${containerPrefix}-${side}`);
+        console.warn(`未找到容器：${containerPrefix}-${side}`);
         return;
     }
 
@@ -249,7 +249,7 @@ function uiGenerateButtonSettings(userSettings) {
 function uiSetupGeneralSettings(userSettings) {
     const elementProfileId = document.getElementById("dropdown-profileId");
     if (!elementProfileId) {
-        console.warn("Profile dropdown not found.");
+        console.warn("未找到配置文件下拉菜单。");
         return;
     }
 
@@ -270,7 +270,7 @@ function uiSetupGeneralSettings(userSettings) {
 
     const elementPlayerIdx = document.getElementById("dropdown-playerIdx");
     if (!elementPlayerIdx) {
-        console.warn("Player index dropdown not found.");
+        console.warn("未找到玩家索引下拉菜单。");
         return;
     }
 
@@ -295,7 +295,7 @@ function uiSetupGeneralSettings(userSettings) {
 
     const elementDeviceMode = document.getElementById("dropdown-deviceMode");
     if (!elementDeviceMode) {
-        console.warn("Device mode dropdown not found.");
+        console.warn("未找到设备模式下拉菜单。");
         return;
     }
 
@@ -316,7 +316,7 @@ function uiSetupGeneralSettings(userSettings) {
 
     const elementEnableAnalog = document.getElementById("checkbox-analogEnabled");
     if (!elementEnableAnalog) {
-        console.warn("Analog button checkbox not found.");
+        console.warn("未找到模拟按键复选框。");
         return;
     }
     elementEnableAnalog.checked = userSettings.profile.analogEnabled;
@@ -329,9 +329,9 @@ function uiSetupHidePanelListeners() {
     function togglePanel(panel, button) {
         panel.classList.toggle("hidden");
         if (panel.classList.contains("hidden")) {
-            button.textContent = "Show";
+            button.textContent = "显示";
         } else {
-            button.textContent = "Hide";
+            button.textContent = "隐藏";
         }
     }
 
@@ -355,7 +355,7 @@ function uiSetupHidePanelListeners() {
 }
 
 function uiSetupAxisPreviewCheckboxes(userSettings) {
-    const tip = "To get an accurate preview, reset the profile to defaults and save it before enabling this feature.";
+    const tip = "为获得准确预览，请先将配置文件恢复默认值并保存，然后再启用此功能。";
 
     let elements = [];
     elements.push(document.getElementById("checkbox-previewJoy-left"));
@@ -431,13 +431,13 @@ export const UI = {
         if (saveButton) {
             saveButton.addEventListener("click", () => listenerFunc());
         } else {
-            console.warn("Save button not found.");
+            console.warn("未找到保存按钮。");
         }
     },
 
     addCallbackLoadProfile(listenerFunc, userSettings) {
         if (!userSettings) {
-            console.error("User settings not provided.");
+            console.error("未提供用户设置。");
         }
 
         const reloadButton = document.getElementById("button-reloadProfile");
@@ -448,11 +448,11 @@ export const UI = {
                     userSettings.profile.profileId = parseInt(profileIdDropdown.value, 10);
                     listenerFunc();
                 } else {
-                    console.warn("Profile ID dropdown not found.");
+                    console.warn("未找到配置文件ID下拉菜单。");
                 }
             });
         } else {
-            console.warn("Reload button not found.");
+            console.warn("未找到重新加载按钮。");
         }
 
         const profileIdDropdown = document.getElementById("dropdown-profileId");
@@ -462,7 +462,7 @@ export const UI = {
                 listenerFunc();
             });
         } else {
-            console.warn("Profile ID dropdown not found.");
+            console.warn("未找到配置文件ID下拉菜单。");
         }
     },
 
@@ -471,7 +471,7 @@ export const UI = {
         if (disconnectButton) {
             disconnectButton.addEventListener("click", () => listenerFunc());
         } else {
-            console.warn("Disconnect button not found.");
+            console.warn("未找到断开连接按钮。");
         }
     },
 
@@ -537,7 +537,7 @@ export const UI = {
             });
 
             if (!visualizer) {
-                console.warn("Visualizer not found for joystick.");
+                console.warn("未找到摇杆可视化组件。");
             }
     
             visualizer.drawSettings(joystickSettings);
@@ -620,19 +620,13 @@ export const UI = {
         if (connectButtonUsb) {
             connectButtonUsb.disabled = !enabled;
         } else {
-            console.warn("Connect button not found.");
-        }
-        const connectButtonBt = document.getElementById("connectBt");
-        if (connectButtonBt) {
-            connectButtonBt.disabled = !enabled;
-        } else {
-            console.warn("Connect button not found.");
+            console.warn("未找到连接按钮。");
         }
         const programButton = document.getElementById("connectOgxmW");
         if (programButton) {
             programButton.disabled = !enabled;
         } else {
-            console.warn("Connect button not found.");
+            console.warn("未找到连接按钮。");
         }
     },
 
@@ -641,7 +635,7 @@ export const UI = {
         if (subheader) {
             subheader.querySelector("h3").textContent = text;
         } else {
-            console.warn("Subheader not found.");
+            console.warn("未找到子标题。");
         }
     },
 
@@ -650,7 +644,7 @@ export const UI = {
         if (elementProfileId) {
             return parseInt(elementProfileId.value, 10);
         } else {
-            console.warn("Profile ID dropdown not found.");
+            console.warn("未找到配置文件ID下拉菜单。");
             return -1;
         }
     },
@@ -660,7 +654,7 @@ export const UI = {
         if (elementPlayerIdx) {
             return parseInt(elementPlayerIdx.value, 10);
         } else {
-            console.warn("Player index dropdown not found.");
+            console.warn("未找到玩家索引下拉菜单。");
             return -1;
         }
     },
@@ -670,7 +664,7 @@ export const UI = {
         if (elementDeviceMode) {
             return parseInt(elementDeviceMode.value, 10);
         } else {
-            console.warn("Device mode dropdown not found.");
+            console.warn("未找到设备模式下拉菜单。");
             return -1;
         }
     }

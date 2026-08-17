@@ -212,7 +212,7 @@ export const UsbEsp32 = {
                     terminal.writeLine("点击 “编程第 2 步” 完成适配器编程。");
 
                 } catch (error) {
-                    console.warn("Error: " + error.message);
+                    console.warn("错误：" + error.message);
                     UIProgram.enableProgramPicoButton(true);
                 }
             });
@@ -226,13 +226,13 @@ export const UsbEsp32 = {
                 try {
                     await programEsp32(fwFiles);
                 } catch (error) {
-                    console.warn("错误: " + error.message);
+                    console.warn("错误：" + error.message);
                     UIProgram.enableProgramEsp32Button(true);
                 }
             });
 
         } catch (error) {
-            console.error("错误: " + error.message);
+            console.error("错误：" + error.message);
         }
     }
 };
