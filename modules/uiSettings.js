@@ -622,12 +622,6 @@ export const UI = {
         } else {
             console.warn("未找到连接按钮。");
         }
-        const connectButtonBt = document.getElementById("connectBt");
-        if (connectButtonBt) {
-            connectButtonBt.disabled = !enabled;
-        } else {
-            console.warn("未找到连接按钮。");
-        }
         const programButton = document.getElementById("connectOgxmW");
         if (programButton) {
             programButton.disabled = !enabled;
