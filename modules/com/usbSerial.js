@@ -56,7 +56,7 @@ class USBManager {
                 return true;
             }
         } catch (error) {
-            console.warn('Connection error:', error);
+            console.warn('连接错误：', error);
             await this.#interface.disconnect();
             return false;
         }
@@ -114,7 +114,7 @@ class USBManager {
 
     #deserializeHeader(packetData) {
         if (packetData.length < USBManager.#HEADER_LENGTH) {
-            console.error("Invalid packet data length.");
+            console.error("无效的数据包长度。");
             return;
         }
         const header = {};
@@ -139,7 +139,7 @@ class USBManager {
     #processPacketInData(header, bufferIn, dataLen) {
         switch (header.packetId) {
             case USBManager.#PACKET_ID.GET_PROFILE_BY_IDX:   
-                console.log("Received profile data.");
+                console.log("已接收配置文件数据。");
                 this.#userSettings.setProfileFromBytes(bufferIn.subarray(0, dataLen));
                 this.#userSettings.maxGamepads = header.maxGamepads;
                 this.#userSettings.playerIdx = header.playerIdx;
@@ -148,7 +148,7 @@ class USBManager {
                 break;
 
             case USBManager.#PACKET_ID.GET_PROFILE_BY_ID:
-                console.log("Received profile data.");
+                console.log("已接收配置文件数据。");
                 this.#userSettings.setProfileFromBytes(bufferIn.subarray(0, dataLen));
                 this.#userSettings.maxGamepads = header.maxGamepads;
                 this.#userSettings.deviceMode = header.deviceMode;
@@ -162,14 +162,14 @@ class USBManager {
                 break;
 
             default:
-                console.warn(`Unknown packet ID: ${header.packetId}`);
+                console.warn(`未知数据包ID：${header.packetId}`);
                 break;
         }
     }
 
     #processPacketIn(data) {
         if (data[0] !== USBManager.#PACKET_LENGTH) {
-            console.warn(`Invalid packet length: ${data[0]}`);
+            console.warn(`无效的数据包长度：${data[0]}`);
             return;
         }
         const header = this.#deserializeHeader(data);
@@ -183,7 +183,7 @@ class USBManager {
 
         this.#currentBufferInOffset += header.chunkLen;
 
-        console.log("Received packet: " + (header.chunkIdx + 1) + " of " + header.chunksTotal);    
+        console.log("已接收数据包：" + (header.chunkIdx + 1) + " / " + header.chunksTotal);    
 
         if (header.chunkIdx + 1 === header.chunksTotal) {
             this.#processPacketInData(header, this.#bufferIn, this.#currentBufferInOffset);
@@ -213,7 +213,7 @@ class USBManager {
                 USBManager.#HEADER_LENGTH
             );
 
-            console.log("Writing packet: " + (i + 1) + " of " + chunksTotal);
+            console.log("正在写入数据包：" + (i + 1) + " / " + chunksTotal);
 
             await this.#interface.write(buffer);
             currentOffset += chunkLen;
@@ -229,7 +229,7 @@ export const USB = {
 
     async connect() {
         if (!("serial" in navigator)) {
-            console.error("Web Serial API not supported.");
+            console.error("不支持 Web Serial API。");
             return;
         }
 
@@ -241,14 +241,14 @@ export const USB = {
             UI.connectButtonsEnabled(false);
 
             if (!(await usbManager.init(userSettings))) {
-                throw new Error("Connection failed.");
+                throw new Error("连接失败。");
             }
 
             await usbManager.getProfileByIdx();
 
             UI.updateAll(userSettings);
             UI.toggleConnected(true);
-            UI.setSubheaderText("Settings");
+            UI.setSubheaderText("设置");
 
             UI.addCallbackLoadProfile(async () => {
                 await usbManager.getProfileById();
@@ -266,7 +266,7 @@ export const USB = {
             });
 
         } catch (error) {
-            console.warn('Connection error:', error);
+            console.warn('连接错误：', error);
             usbManager.disconnect();
             window.location.reload();
         }

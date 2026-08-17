@@ -71,7 +71,7 @@ class BTManager {
 
         const buffer = await this.#tryRead(BTManager.UUID.GET_SETUP);
         if (!buffer || buffer.length === 0) {
-            console.warn('Failed to read setup data');
+            console.warn('读取设置数据失败');
             return false;
         }
 
@@ -130,7 +130,7 @@ class BTManager {
                 new Uint8Array(Object.values(header))
             );
             if (!success) {
-                console.warn('Failed to write setup packet');
+                console.warn('写入设置数据包失败');
                 return false;
             }
     
@@ -258,7 +258,7 @@ class BTManager {
         }
 
         userSettings.setProfileFromBytes(bufferIn);  
-        console.log('Profile read, ID:', userSettings.profile.profileId);
+        console.log('配置文件已读取，ID：', userSettings.profile.profileId);
         this.#mutex.unlock();
         return true;
     }
@@ -323,7 +323,7 @@ export const BT = {
             }, userSettings);
 
             UI.addCallbackSaveProfile(async () => {
-                console.log('Saving profile...', userSettings.profile);
+                console.log('正在保存配置文件...', userSettings.profile);
                 await btManager.saveProfile(userSettings);
             }, userSettings);
 
@@ -336,7 +336,7 @@ export const BT = {
             btManager.runGamepadTask(userSettings);
 
         } catch (error) {
-            console.warn('Connection error:', error);
+            console.warn('连接错误：', error);
             UI.toggleConnected(false);
             await btManager.disconnect();
             window.location.reload();
