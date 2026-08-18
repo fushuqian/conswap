@@ -284,19 +284,6 @@ button:active:not(:disabled) {
 .guideTable td:first-child {
     font-weight: 500;
     color: #334155;
-    position: relative;
-}
-
-.guideTable td:first-child::after {
-    content: '';
-    position: absolute;
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 4px;
-    background: #cbd5e1;
-    border-radius: 50%;
 }
 
 .keyCell {
