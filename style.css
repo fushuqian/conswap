@@ -248,7 +248,7 @@ button:active:not(:disabled) {
 .guideTable {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
+    table-layout: auto;
 }
 
 .guideTable th,
@@ -269,7 +269,8 @@ button:active:not(:disabled) {
 
 .guideTable td:first-child,
 .guideTable th:first-child {
-    width: auto;
+    width: 1%;
+    white-space: nowrap;
 }
 
 .guideTable tr:last-child td {
